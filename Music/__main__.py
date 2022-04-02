@@ -3,7 +3,7 @@ import time
 import uvloop
 import importlib
 from pyrogram import Client
-from Music.config import API_ID, API_HASH, BOT_TOKEN, MONGO_DB_URI, SUDO_USERS, LOG_GROUP_ID
+from Music.config import API_ID, API_HASH, BOT_TOKEN, MONGO_DB_URI, SUDO_USERS, LOG_GROUP_ID, AUTO_LEAVE
 from Music import BOT_NAME, ASSNAME, app, client
 from Music.MusicUtilities.database.functions import clean_restart_stage
 from Music.MusicUtilities.database.queue import (get_active_chats, remove_active_chat)
@@ -12,6 +12,13 @@ from Music.MusicUtilities.helpers.decorators import nothingmuch as startapp
 from pytgcalls import idle
 from motor.motor_asyncio import AsyncIOMotorClient as MongoClient
 import time
+import pytz
+from pytz import utc
+from Music.MusicUtilities.helpers.autoleave import leave_from_inactive_call
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
+
+
+scheduler = AsyncIOScheduler()
 
 Client(
     ':Music:',
