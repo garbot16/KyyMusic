@@ -32,7 +32,14 @@ Client(
 print(f"[INFO]: BOT STARTED AS {BOT_NAME}!")
 print(f"[INFO]: ASSISTANT STARTED AS {ASSNAME}!")
 
-
+print("[INFO]: STARTED BOT AND SENDING THE INFO TO SERVER")
+    if AUTO_LEAVE:
+        print("[ INFO ] STARTING SCHEDULER")
+        scheduler.configure(timezone=pytz.utc)
+        scheduler.add_job(
+            leave_from_inactive_call, "interval", seconds=AUTO_LEAVE
+        )
+        scheduler.start()
 
 async def load_start():
     restart_data = await clean_restart_stage()
